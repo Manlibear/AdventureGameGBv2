@@ -1,0 +1,96 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "runner": "terminal",
+    "tasks": [
+        {
+            "label": "Build & Run",
+            "type": "shell",
+            "command": "echo \"Complete!\"",
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Clear",
+                "Build",
+                "Run"
+            ],
+            "group": "build",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "windows": {
+                "command": "echo Deploying...; taskkill /IM \"bgb.exe\" >$null 2>&1; & 'C:\\Program Files\\bgb\\bgb.exe' bin\\main.gb"
+            },
+            "linux": {},
+            "group": "none",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            }
+        },
+        {
+            "label": "View ROM Banks",
+            "type": "shell",
+            "windows": {
+                "command": "tools\\romusage.exe bin\\main.ihx"
+            },
+            "group": "build",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Clear",
+                "Build"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            }
+        },
+        {
+            "label": "Clear",
+            "type": "shell",
+            "windows": {
+                "command": "cls"
+            },
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            }
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "windows": {
+                "command": "tools\\make.ps1"
+            },
+            "linux": {},
+            "group": "build",
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Upload to Switch",
+            "type": "shell",
+            "windows": {
+                "command": "tools\\switch-ftp.ps1;"
+            },
+            "linux": {},
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
