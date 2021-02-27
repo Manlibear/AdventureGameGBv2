@@ -18,7 +18,6 @@
 
 #define route_1_map_width 32
 #define route_1_map_height 72
-#define route_1_map_length #LENGTH#
 #define route_1_map_bank 6
 #define route_1_map_offset 103
 

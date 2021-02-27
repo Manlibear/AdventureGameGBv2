@@ -18,7 +18,6 @@
 
 #define pewter_city_map_width 80
 #define pewter_city_map_height 72
-#define pewter_city_map_length #LENGTH#
 #define pewter_city_map_bank 5
 #define pewter_city_map_offset 103
 

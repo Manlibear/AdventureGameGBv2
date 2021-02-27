@@ -1,6 +1,6 @@
 #ifndef _MAP_AREA
 #define _MAP_AREA
-#define map_area_count 13
+#define map_area_count 15
 
 #include <gb/gb.h>
 

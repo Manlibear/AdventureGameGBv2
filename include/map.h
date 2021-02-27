@@ -11,6 +11,7 @@
 
 #include "sprite.h"
 #include "map_area.h"
+#include "map_layer.h"
 
 
 extern const MapArea oob;

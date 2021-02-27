@@ -6,6 +6,7 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
     [0] = {
         .tile_map = overworld,
         .tile_map_length = overworld_length,
+        .tile_map_bank = overworldBank,
         .walkable_tiles = {
             15,
             0x00,
@@ -23,7 +24,28 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
             0x95,
             0xA1,
             0xBB,
-        }}};
+        }
+    },
+    [1] = {
+        .tile_map = indoors,
+        .tile_map_length = indoors_length,
+        .tile_map_bank = indoorsBank,
+        .walkable_tiles = {
+            11,
+            0x7A,
+            0xAB,
+            0xAC,
+            0x9E,
+            0x9F,
+            0xA0,
+            0xA1,
+            0x7B,
+            0x7C,
+            0x82,
+            0x83
+        }
+    }
+};
 
 char is_tile_walkable(UINT16 x, UINT16 y, unsigned char layer)
 {

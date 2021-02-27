@@ -7,7 +7,7 @@ const MapArea oob = {0};
 
 unsigned char loaded_layer = 0;
 unsigned char tile_load_buffer[20];
-unsigned char oob_fill = 0x00;
+unsigned char oob_fill = 0x68;
 
 void redraw_map()
 {
@@ -17,7 +17,9 @@ void redraw_map()
     {
         position_layer = tile_area->layer;
         loaded_layer = tile_area->layer;
-        //TODO: load data from different layers
+
+        SWITCH_ROM_MBC1(map_layers[tile_area->layer].tile_map_bank);
+        set_bkg_data(104, map_layers[tile_area->layer].tile_map_length, map_layers[tile_area->layer].tile_map);
     }
 
     if (tile_area->bank != _current_bank)

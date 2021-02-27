@@ -17,7 +17,7 @@ void main()
             if (is_on_travel_tile())
             {
                 fade_out_black();
-                move_bkg(((target_x - 9) * 8), ((target_y - 7) * 8) + 8);
+                move_bkg(((target_x - 9) * 8) & 255, (((target_y - 7) * 8) + 8) & 255);
                 redraw_map();
                 fade_in();
             }

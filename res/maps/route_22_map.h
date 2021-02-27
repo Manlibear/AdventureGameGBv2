@@ -18,7 +18,6 @@
 
 #define route_22_map_width 84
 #define route_22_map_height 40
-#define route_22_map_length #LENGTH#
 #define route_22_map_bank 5
 #define route_22_map_offset 103
 

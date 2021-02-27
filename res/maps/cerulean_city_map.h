@@ -18,7 +18,6 @@
 
 #define cerulean_city_map_width 80
 #define cerulean_city_map_height 72
-#define cerulean_city_map_length #LENGTH#
 #define cerulean_city_map_bank 4
 #define cerulean_city_map_offset 103
 

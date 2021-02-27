@@ -18,7 +18,6 @@
 
 #define viridian_city_map_width 80
 #define viridian_city_map_height 72
-#define viridian_city_map_length #LENGTH#
 #define viridian_city_map_bank 6
 #define viridian_city_map_offset 103
 

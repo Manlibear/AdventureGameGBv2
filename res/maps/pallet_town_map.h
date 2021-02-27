@@ -18,7 +18,6 @@
 
 #define pallet_town_map_width 40
 #define pallet_town_map_height 36
-#define pallet_town_map_length #LENGTH#
 #define pallet_town_map_bank 7
 #define pallet_town_map_offset 103
 
