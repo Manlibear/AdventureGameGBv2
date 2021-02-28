@@ -20,6 +20,7 @@
 #define cerulean_city_map_height 72
 #define cerulean_city_map_bank 4
 #define cerulean_city_map_offset 103
+#define cerulean_city_idx 10
 
 extern const unsigned char cerulean_city_map[];
 

@@ -168,6 +168,8 @@ for layer_name, areas in pairs(layer_map) do
     tiles_c_template = tiles_c_template:gsub("#NAME#", layer_name)
     tiles_h_template = tiles_h_template:gsub("#BANK#", areas["bank"])
     tiles_c_template = tiles_c_template:gsub("#BANK#", areas["bank"])
+    
+    tiles_h_template = tiles_h_template:gsub("#LAYER_INDEX#", layer_index)
 
     tiles_h_template = tiles_h_template:gsub("#LENGTH#", areas["tile_count"])
 
@@ -219,6 +221,7 @@ for layer_name, areas in pairs(layer_map) do
             map_h_template = map_h_template:gsub("#OFFSET#", offset)
             map_h_template = map_h_template:gsub("#WIDTH#", v["w"])
             map_h_template = map_h_template:gsub("#HEIGHT#", v["h"])
+            map_h_template = map_h_template:gsub("#AREA_INDEX#", area_index)
 
             map_c_template = map_c_template:gsub("#NAME#", i)
             map_c_template = map_c_template:gsub("#BANK#", v["bank"])

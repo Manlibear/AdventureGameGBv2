@@ -2,6 +2,25 @@
 #define _MAP_DATA_H
 
 #include <gb/gb.h>
+#include "../res/maps/pallet_town_map.h"
+#include "../res/maps/route_3_map.h"
+#include "../res/maps/route_5_map.h"
+#include "../res/maps/route_22_map.h"
+#include "../res/maps/route_9_map.h"
+#include "../res/maps/pewter_city_map.h"
+#include "../res/maps/route_25_map.h"
+#include "../res/maps/route_24_map.h"
+#include "../res/maps/route_2_map.h"
+#include "../res/maps/viridian_city_map.h"
+#include "../res/maps/cerulean_city_map.h"
+#include "../res/maps/route_4_map.h"
+#include "../res/maps/route_1_map.h"
+#include "../res/maps/oaks_lab_map.h"
+#include "../res/maps/players_house_1f_map.h"
+#include "../res/maps/rivals_house_map.h"
+#include "../res/maps/players_house_gf_map.h"
+#include "../res/tiles/indoors.h"
+#include "../res/tiles/overworld.h"
 
 #define TRAVEL_TILES_COUNT 8
 #define INTERACTABLE_COUNT 8

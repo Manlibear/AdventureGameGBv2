@@ -20,6 +20,7 @@
 #define route_1_map_height 72
 #define route_1_map_bank 6
 #define route_1_map_offset 103
+#define route_1_idx 12
 
 extern const unsigned char route_1_map[];
 

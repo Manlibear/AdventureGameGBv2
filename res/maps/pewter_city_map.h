@@ -20,6 +20,7 @@
 #define pewter_city_map_height 72
 #define pewter_city_map_bank 5
 #define pewter_city_map_offset 103
+#define pewter_city_idx 5
 
 extern const unsigned char pewter_city_map[];
 

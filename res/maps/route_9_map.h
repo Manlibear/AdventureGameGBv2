@@ -20,6 +20,7 @@
 #define route_9_map_height 36
 #define route_9_map_bank 1
 #define route_9_map_offset 103
+#define route_9_idx 4
 
 extern const unsigned char route_9_map[];
 

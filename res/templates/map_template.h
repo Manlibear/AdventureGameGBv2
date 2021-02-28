@@ -20,6 +20,7 @@
 #define #NAME#_map_height #HEIGHT#
 #define #NAME#_map_bank #BANK#
 #define #NAME#_map_offset #OFFSET#
+#define #NAME#_idx #AREA_INDEX#
 
 extern const unsigned char #NAME#_map[];
 

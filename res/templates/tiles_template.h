@@ -23,6 +23,7 @@
 /* Start of tile array. */
 
 #define #NAME#_length #LENGTH#
+#define #NAME#_idx #LAYER_INDEX#
 extern const void __bank_#NAME#;
 extern const unsigned char #NAME#[];
 

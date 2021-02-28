@@ -20,6 +20,7 @@
 #define route_3_map_height 36
 #define route_3_map_bank 5
 #define route_3_map_offset 103
+#define route_3_idx 1
 
 extern const unsigned char route_3_map[];
 

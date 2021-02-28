@@ -20,6 +20,7 @@
 #define viridian_city_map_height 72
 #define viridian_city_map_bank 6
 #define viridian_city_map_offset 103
+#define viridian_city_idx 9
 
 extern const unsigned char viridian_city_map[];
 

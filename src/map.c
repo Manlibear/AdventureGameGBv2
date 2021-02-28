@@ -32,7 +32,6 @@ void redraw_map()
 
     UINT16 tile_index;
     UINT16 target_tile;
-    BGB_MESSAGE_FMT(dmb, "redraw");
     tile_area = get_area(target_x, target_y);
     for (i = -1; i < 19; i++)
     {

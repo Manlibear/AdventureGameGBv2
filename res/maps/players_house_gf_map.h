@@ -20,6 +20,7 @@
 #define players_house_gf_map_height 18
 #define players_house_gf_map_bank 10
 #define players_house_gf_map_offset 103
+#define players_house_gf_idx 3
 
 extern const unsigned char players_house_gf_map[];
 

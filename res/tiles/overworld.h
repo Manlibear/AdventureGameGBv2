@@ -23,6 +23,7 @@
 /* Start of tile array. */
 
 #define overworld_length 95
+#define overworld_idx 0
 extern const void __bank_overworld;
 extern const unsigned char overworld[];
 

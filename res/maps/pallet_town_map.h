@@ -20,6 +20,7 @@
 #define pallet_town_map_height 36
 #define pallet_town_map_bank 7
 #define pallet_town_map_offset 103
+#define pallet_town_idx 0
 
 extern const unsigned char pallet_town_map[];
 

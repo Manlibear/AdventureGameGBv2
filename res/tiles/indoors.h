@@ -22,7 +22,8 @@
 #define indoorsBank 9
 /* Start of tile array. */
 
-#define indoors_length 69
+#define indoors_length 109
+#define indoors_idx 1
 extern const void __bank_indoors;
 extern const unsigned char indoors[];
 

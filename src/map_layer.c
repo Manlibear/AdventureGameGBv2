@@ -3,7 +3,7 @@
 unsigned char tile_check_buffer[1];
 
 const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
-    [0] = {
+    [overworld_idx] = {
         .tile_map = overworld,
         .tile_map_length = overworld_length,
         .tile_map_bank = overworldBank,
@@ -26,27 +26,34 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
             0xBB,
         }
     },
-    [1] = {
+    [indoors_idx] = {
         .tile_map = indoors,
         .tile_map_length = indoors_length,
         .tile_map_bank = indoorsBank,
         .walkable_tiles = {
-            15,
-            0x7A,
-            0xAB,
-            0xAC,
-            0x9E,
-            0x9F,
-            0xA0,
-            0xA1,
-            0xA2,
-            0xA3,
-            0xA5,
-            0xA6,
-            0x7B,
-            0x7C,
-            0x82,
-            0x83
+            21,
+            0x87,
+            0x88,
+            0x96,
+            0xD3,
+            0xD4,
+            0x85,
+            0x86,
+            0x99,
+            0x9A,
+            0x9B,
+            0x9C,
+            0xAA,
+            0xA7,
+            0xB8,
+            0xB9,
+            0xBA,
+            0xBB,
+            0xCC,
+            0xCD,
+            0xCE,
+            0xCF,
+
         }
     }
 };
