@@ -17,7 +17,7 @@ void main()
         {
             has_travelled = 1;
             fade_out_black();
-            move_bkg(((target_x - 9) * 8) & 255, (((target_y - 7) * 8)) & 255);
+            move_bkg((SCR_LEFT * 8) & 255, ((SCR_TOP * 8)) & 255);
             redraw_map();
             fade_in();
         }
