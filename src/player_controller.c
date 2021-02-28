@@ -4,6 +4,8 @@ UINT16 position_x = 0;
 UINT16 position_y = 0;
 unsigned char position_layer = 0;
 
+unsigned char has_travelled = 0;
+
 UINT16 target_x = 0;
 UINT16 target_y = 0;
 

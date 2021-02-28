@@ -68,7 +68,7 @@ char is_on_travel_tile()
 
     for (int i = 0; i < TRAVEL_TILES_COUNT; i++)
     {
-        if (target_x == tts[i].sourceX && target_y == tts[i].sourceY)
+        if (position_x == tts[i].sourceX && position_y == tts[i].sourceY)
         {
             position_x = target_x = tts[i].targetX;
             position_y = target_y = tts[i].targetY;

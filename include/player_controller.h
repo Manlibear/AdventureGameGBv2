@@ -11,6 +11,8 @@ extern UINT16 position_x;
 extern UINT16 position_y;
 extern unsigned char position_layer;
 
+extern unsigned char has_travelled;
+
 extern UINT16 target_x;
 extern UINT16 target_y;
 

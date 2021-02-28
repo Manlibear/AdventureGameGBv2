@@ -72,6 +72,7 @@ void update_camera()
             }
 
             needs_redraw = 1;
+            has_travelled = 0;
         }
     }
 

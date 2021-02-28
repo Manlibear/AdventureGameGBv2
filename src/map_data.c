@@ -21,8 +21,9 @@ const struct LayerData layers_data[3] = {
             }
         }
     },
+    // indoors
     [1] = {
-        .maps ={
+        .maps = {
             // player's house 1f
             [0] = {
                 .travel_tiles = {

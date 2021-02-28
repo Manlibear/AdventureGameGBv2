@@ -12,19 +12,18 @@ void main()
         handle_player_input();
         update_camera();
         handle_animation(&player);
-        if (needs_redraw)
+
+        if (!player.is_moving && !has_travelled && is_on_travel_tile())
         {
-            if (is_on_travel_tile())
-            {
-                fade_out_black();
-                move_bkg(((target_x - 9) * 8) & 255, (((target_y - 7) * 8) + 8) & 255);
-                redraw_map();
-                fade_in();
-            }
-            else
-            {
-                draw_map_slice();
-            }
+            has_travelled = 1;
+            fade_out_black();
+            move_bkg(((target_x - 9) * 8) & 255, (((target_y - 7) * 8)) & 255);
+            redraw_map();
+            fade_in();
+        }
+        else if (needs_redraw)
+        {
+            draw_map_slice();
         }
     }
 }
