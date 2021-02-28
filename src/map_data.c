@@ -10,12 +10,28 @@ const struct LayerData layers_data[3] = {
             [pallet_town_idx] = {
                 .travel_tiles = {
                     // player's house
-                    [0] = {
+                    {
                         .sourceX = 114,
                         .sourceY =  478,
                         .targetLayer = indoors_idx,
                         .targetX = 47,
                         .targetY = 464
+                    },
+                    // rival's house
+                    {
+                        .sourceX = 130,
+                        .sourceY =  478,
+                        .targetLayer = indoors_idx,
+                        .targetX = 73,
+                        .targetY = 464
+                    },
+                    // oak's lab
+                    {
+                        .sourceX = 128,
+                        .sourceY =  490,
+                        .targetLayer = indoors_idx,
+                        .targetX = 77,
+                        .targetY = 498
                     }
                 }
             }
@@ -26,7 +42,7 @@ const struct LayerData layers_data[3] = {
             [players_house_1f_idx] = {
                 .travel_tiles = {
                     // stairs down
-                    [0] = {
+                    {
                         .sourceX = 56,
                         .sourceY =  483,
                         .targetLayer = indoors_idx,
@@ -38,7 +54,7 @@ const struct LayerData layers_data[3] = {
             [players_house_gf_idx] = {
                 .travel_tiles = {
                     // stairs up
-                    [0] = {
+                    {
                         .sourceX = 56,
                         .sourceY =  452,
                         .targetLayer = indoors_idx,
@@ -46,12 +62,36 @@ const struct LayerData layers_data[3] = {
                         .targetY = 483
                     },
                     // door out
-                    [1] = {
+                    {
                         .sourceX = 47,
                         .sourceY =  465,
                         .targetLayer = overworld_idx,
                         .targetX = 114,
                         .targetY = 479
+                    }
+                }
+            },
+            [rivals_house_idx] = {
+                .travel_tiles = {
+                    // door out
+                    {
+                        .sourceX = 73,
+                        .sourceY =  465,
+                        .targetLayer = overworld_idx,
+                        .targetX = 130,
+                        .targetY = 479
+                    }
+                }
+            },
+            [oaks_lab_idx] = {
+                .travel_tiles = {
+                    // door out
+                    {
+                        .sourceX = 77,
+                        .sourceY =  499,
+                        .targetLayer = overworld_idx,
+                        .targetX = 128,
+                        .targetY = 491
                     }
                 }
             }

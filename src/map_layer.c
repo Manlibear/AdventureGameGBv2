@@ -31,7 +31,10 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
         .tile_map_length = indoors_length,
         .tile_map_bank = indoorsBank,
         .walkable_tiles = {
-            21,
+            24,
+            0x78,
+            0x85,
+            0x86,
             0x87,
             0x88,
             0x96,

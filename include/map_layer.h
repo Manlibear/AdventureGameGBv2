@@ -11,7 +11,7 @@
 
 typedef struct MapLayer
 {
-    const unsigned char walkable_tiles[22];
+    const unsigned char walkable_tiles[25];
     const unsigned char infront_tiles[2];
     const unsigned char *tile_map;
     const unsigned char tile_map_bank;
