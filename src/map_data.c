@@ -33,6 +33,32 @@ const struct LayerData layers_data[3] = {
                         .targetX = 77,
                         .targetY = 498
                     }
+                },
+                .interactables = {
+                    // sign near player's house
+                    {
+                        .text = "Player's house",
+                        .x = 110,
+                        .y = 479
+                    },
+                    // sign near rival's house
+                    {
+                        .text = "Rival's house",
+                        .x = 126,
+                        .y = 479
+                    },
+                    // sign in the center of town
+                    {
+                        .text = "PALLET TOWN\\Shades of your\\journey await!",
+                        .x = 118,
+                        .y = 487
+                    },
+                    // sign outside Oak's Lab
+                    {
+                        .text = "Prof Oak's Pokemon\\Research Lab",
+                        .x = 130,
+                        .y = 495
+                    }
                 }
             }
         }

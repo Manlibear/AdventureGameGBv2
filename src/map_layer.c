@@ -24,42 +24,35 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
             0x95,
             0xA1,
             0xBB,
-        }
-    },
-    [indoors_idx] = {
-        .tile_map = indoors,
-        .tile_map_length = indoors_length,
-        .tile_map_bank = indoorsBank,
-        .walkable_tiles = {
-            24,
-            0x78,
-            0x85,
-            0x86,
-            0x87,
-            0x88,
-            0x96,
-            0xD3,
-            0xD4,
-            0x85,
-            0x86,
-            0x99,
-            0x9A,
-            0x9B,
-            0x9C,
-            0xAA,
-            0xA7,
-            0xB8,
-            0xB9,
-            0xBA,
-            0xBB,
-            0xCC,
-            0xCD,
-            0xCE,
-            0xCF,
+        }},
+    [indoors_idx] = {.tile_map = indoors, .tile_map_length = indoors_length, .tile_map_bank = indoorsBank, .walkable_tiles = {
+                                                                                                               24,
+                                                                                                               0x78,
+                                                                                                               0x85,
+                                                                                                               0x86,
+                                                                                                               0x87,
+                                                                                                               0x88,
+                                                                                                               0x96,
+                                                                                                               0xD3,
+                                                                                                               0xD4,
+                                                                                                               0x85,
+                                                                                                               0x86,
+                                                                                                               0x99,
+                                                                                                               0x9A,
+                                                                                                               0x9B,
+                                                                                                               0x9C,
+                                                                                                               0xAA,
+                                                                                                               0xA7,
+                                                                                                               0xB8,
+                                                                                                               0xB9,
+                                                                                                               0xBA,
+                                                                                                               0xBB,
+                                                                                                               0xCC,
+                                                                                                               0xCD,
+                                                                                                               0xCE,
+                                                                                                               0xCF,
 
-        }
-    }
-};
+                                                                                                           }}};
 
 char is_tile_walkable(UINT16 x, UINT16 y, unsigned char layer)
 {
@@ -92,4 +85,22 @@ char is_on_travel_tile()
     }
 
     return 0;
+}
+
+char is_tile_interactable()
+{
+    
+    MapArea *ma = get_area(position_x, position_y);
+    
+    SWITCH_RAM_MBC1(map_dataBank);
+    Interactable *ints = layers_data[position_layer].maps[ma->area_index].interactables;
+
+    for (int i = 0; i < INTERACTABLE_COUNT; i++)
+    {
+        if (position_x == ints[i].x && position_y == ints[i].y)
+        {
+            // display message on screen
+            text_window_offset = show_text_window(ints[i].text, strlen(ints[i].text), map_dataBank, 0);
+        }
+    }
 }

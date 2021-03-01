@@ -29,17 +29,17 @@
 
 typedef struct TravelTile
 {
-    UINT16 sourceX;
-    UINT16 sourceY;
-    unsigned char targetLayer;
-    UINT16 targetX;
-    UINT16 targetY;
+    const UINT16 sourceX;
+    const UINT16 sourceY;
+    const unsigned char targetLayer;
+    const UINT16 targetX;
+    const UINT16 targetY;
 } TravelTile;
 
 typedef struct Interactable{
-    UINT16 x;
-    UINT16 y;
-    unsigned char* text;
+    const UINT16 x;
+    const UINT16 y;
+    const unsigned char* text;
 } Interactable;
 
 typedef struct MapData

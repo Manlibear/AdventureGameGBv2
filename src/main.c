@@ -10,20 +10,42 @@ void main()
     {
         wait_vbl_done();
         handle_player_input();
-        update_camera();
-        handle_animation(&player);
+        if (!window_showing)
+        {
+            // check to see if we're interacting with a tile
+            if (is_interacting && is_tile_interactable())
+            {
+                continue;
+            }
 
-        if (!player.is_moving && !has_travelled && is_on_travel_tile())
-        {
-            has_travelled = 1;
-            fade_out_black();
-            move_bkg((SCR_LEFT * 8) & 255, ((SCR_TOP * 8)) & 255);
-            redraw_map();
-            fade_in();
+            // player movement
+            update_camera();
+            handle_animation(&player);
+
+            if (!player.is_moving && !has_travelled && is_on_travel_tile())
+            {
+                // travel tile
+                has_travelled = 1;
+                fade_out_black();
+                move_bkg((SCR_LEFT * 8) & 255, ((SCR_TOP * 8)) & 255);
+                redraw_map();
+                fade_in();
+            }
+            else if (needs_redraw)
+            {
+                draw_map_slice();
+            }
         }
-        else if (needs_redraw)
+        else if (is_interacting)
         {
-            draw_map_slice();
+            if (text_window_offset > 0)
+            {
+                text_window_offset = show_text_window(text_window_text, text_window_length, text_window_bank, text_window_offset);
+            }
+            else
+            {
+                hide_window();
+            }
         }
     }
 }

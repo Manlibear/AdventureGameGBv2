@@ -5,13 +5,16 @@ UINT16 position_y = 0;
 unsigned char position_layer = 0;
 
 unsigned char has_travelled = 0;
+char is_interacting;
+char allow_interact = 1;
 
 UINT16 target_x = 0;
 UINT16 target_y = 0;
 
-
 void handle_player_input()
 {
+    is_interacting = 0;
+
     switch (joypad())
     {
     case J_UP:
@@ -26,6 +29,12 @@ void handle_player_input()
     case J_RIGHT:
         player.facing = FACE_E;
         break;
+    case J_A:
+        if (allow_interact){
+            allow_interact = 0;
+            is_interacting = 1;
+        }
+        break;
 
     case J_SELECT:
         BGB_print_xy();
@@ -33,5 +42,6 @@ void handle_player_input()
 
     default:
         player.facing = FACE_NONE;
+        allow_interact = 1;
     }
 }
