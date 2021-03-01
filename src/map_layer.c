@@ -70,7 +70,7 @@ char is_tile_walkable(UINT16 x, UINT16 y, unsigned char layer)
 char is_on_travel_tile()
 {
     SWITCH_ROM_MBC1(map_dataBank);
-    MapArea *ma = get_area(position_x, position_y);
+    MapArea *ma = get_adjacent_area(position_x, position_y);
     TravelTile *tts = layers_data[position_layer].maps[ma->area_index].travel_tiles;
 
     for (int i = 0; i < TRAVEL_TILES_COUNT; i++)

@@ -30,6 +30,7 @@ const MapArea areas[map_area_count] = {
         .row_length = 40,
         .bank = 7,
         .area_index = 0,
+        .adjacents = {12},
         .map_data = pallet_town_map
 },
 	// route_3
@@ -174,6 +175,7 @@ const MapArea areas[map_area_count] = {
         .row_length = 32,
         .bank = 6,
         .area_index = 12,
+        .adjacents = {0, 10},
         .map_data = route_1_map
 },
 	// oaks_lab

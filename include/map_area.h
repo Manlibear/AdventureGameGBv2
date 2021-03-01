@@ -15,9 +15,11 @@ typedef struct MapArea
     unsigned char layer;
     unsigned char bank;
     unsigned char* map_data;
+    unsigned char adjacents[4];
 } MapArea;
 
 extern const MapArea areas[map_area_count];
+
 
 
 

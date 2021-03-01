@@ -71,6 +71,8 @@ void init()
     target_y = 479;
     position_layer = 0;
 
+    determine_area(position_x, position_y);
+
     OBP0_REG = 0xE0;
     OBP1_REG = 0xE4;
 

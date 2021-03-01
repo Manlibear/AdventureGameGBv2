@@ -4,6 +4,8 @@
 char i;
 char j;
 MapArea *tile_area = 0;
+MapArea *current_area = 0;
+MapArea *adj_area = 0;
 const MapArea oob = {0};
 
 unsigned char loaded_layer = 0;
@@ -70,7 +72,7 @@ void draw_map_slice()
         draw_edge = player.last_facing == FACE_E ? SCR_RIGHT + 1 : SCR_LEFT - 1;
         for (i = -1; i < 19; i++)
         {
-            tile_area = get_area(draw_edge, SCR_TOP + i);
+            tile_area = get_adjacent_area(draw_edge, SCR_TOP + i);
 
             // maps are never stored in bank 0, so if this thinks it is then it's OOB
             if (tile_area->bank == 0)
@@ -99,7 +101,7 @@ void draw_map_slice()
         draw_edge = player.last_facing == FACE_S ? SCR_BOTTOM + 1 : SCR_TOP - 1;
         for (i = -1; i < 21; i++)
         {
-            tile_area = get_area(SCR_LEFT + i, draw_edge);
+            tile_area = get_adjacent_area(SCR_LEFT + i, draw_edge);
 
             if (tile_area->bank == 0)
             {
@@ -122,6 +124,11 @@ void draw_map_slice()
     }
 }
 
+MapArea *determine_area(UINT16 x, UINT16 y)
+{
+    tile_area = current_area = get_area(x, y);
+}
+
 MapArea *get_area(UINT16 x, UINT16 y)
 {
     // if we've already got a map_area...
@@ -129,7 +136,10 @@ MapArea *get_area(UINT16 x, UINT16 y)
     {
         // ... check if it's the one we need
         if (position_layer == tile_area->layer && x >= tile_area->xs && y >= tile_area->ys && x <= tile_area->xe && y <= tile_area->ye)
+        {
+            current_area = tile_area;
             return tile_area;
+        }
     }
 
     // cache miss, time to go find the correct area
@@ -137,10 +147,30 @@ MapArea *get_area(UINT16 x, UINT16 y)
     {
         if (position_layer == areas[i].layer && x >= areas[i].xs && y >= areas[i].ys && x <= areas[i].xe && y <= areas[i].ye)
         {
+            current_area = &areas[i];
             return &areas[i];
         }
     }
 
     // out of bounds tile, MapArea->bank will be 0, avoid random bank switching from un-init memory and will render a blank tile
+    return &oob;
+}
+
+MapArea *get_adjacent_area(UINT16 x, UINT16 y)
+{
+    if (position_layer == current_area->layer && x >= current_area->xs && y >= current_area->ys && x <= current_area->xe && y <= current_area->ye)
+        return current_area;
+
+    for (int a = 0; a < 4; a++)
+    {
+        adj_area = &areas[current_area->adjacents[a]];
+
+        if (position_layer == adj_area->layer && x >= adj_area->xs && y >= adj_area->ys && x <= adj_area->xe && y <= adj_area->ye)
+        {
+            current_area = adj_area;
+            return adj_area;
+        }
+    }
+
     return &oob;
 }
