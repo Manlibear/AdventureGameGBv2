@@ -27,40 +27,34 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
             0xA1,
             0xBB,
         }},
-    [indoors_idx] = {
-        .tile_map = indoors, 
-        .tile_map_length = indoors_length, 
-        .tile_map_bank = indoorsBank, 
-        .walkable_tiles = {
-            24,
-            0x78,
-            0x85,
-            0x86,
-            0x87,
-            0x88,
-            0x96,
-            0xD3,
-            0xD4,
-            0x85,
-            0x86,
-            0x99,
-            0x9A,
-            0x9B,
-            0x9C,
-            0xAA,
-            0xA7,
-            0xB8,
-            0xB9,
-            0xBA,
-            0xBB,
-            0xCC,
-            0xCD,
-            0xCE,
-            0xCF,
+    [indoors_idx] = {.tile_map = indoors, .tile_map_length = indoors_length, .tile_map_bank = indoorsBank, .walkable_tiles = {
+                                                                                                               24,
+                                                                                                               0x78,
+                                                                                                               0x85,
+                                                                                                               0x86,
+                                                                                                               0x87,
+                                                                                                               0x88,
+                                                                                                               0x96,
+                                                                                                               0xD3,
+                                                                                                               0xD4,
+                                                                                                               0x85,
+                                                                                                               0x86,
+                                                                                                               0x99,
+                                                                                                               0x9A,
+                                                                                                               0x9B,
+                                                                                                               0x9C,
+                                                                                                               0xAA,
+                                                                                                               0xA7,
+                                                                                                               0xB8,
+                                                                                                               0xB9,
+                                                                                                               0xBA,
+                                                                                                               0xBB,
+                                                                                                               0xCC,
+                                                                                                               0xCD,
+                                                                                                               0xCE,
+                                                                                                               0xCF,
 
-        }
-    }
-};
+                                                                                                           }}};
 
 char is_tile_walkable(UINT16 x, UINT16 y, unsigned char layer)
 {
@@ -103,9 +97,31 @@ char is_tile_interactable()
     SWITCH_RAM_MBC1(map_dataBank);
     Interactable *ints = layers_data[position_layer].maps[ma->area_index].interactables;
 
+    UINT16 int_target_x = position_x;
+    UINT16 int_target_y = position_y;
+
+    switch (player.last_facing)
+    {
+        case FACE_E:
+            int_target_x += 2;
+            break;
+            
+        case FACE_W:
+            int_target_x -= 2;
+            break;
+            
+        case FACE_N:
+            int_target_y -= 2;
+            break;
+            
+        case FACE_S:
+            int_target_y += 2;
+            break;
+    }
+
     for (int i = 0; i < INTERACTABLE_COUNT; i++)
     {
-        if (position_x == ints[i].x && position_y == ints[i].y)
+        if (int_target_x == ints[i].x && int_target_y == ints[i].y)
         {
             // display message on screen
             text_window_offset = show_text_window(ints[i].text, strlen(ints[i].text), map_dataBank, 0);

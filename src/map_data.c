@@ -39,25 +39,25 @@ const struct LayerData layers_data[3] = {
                     {
                         .text = "Player's house",
                         .x = 110,
-                        .y = 479
+                        .y = 478
                     },
                     // sign near rival's house
                     {
                         .text = "Rival's house",
                         .x = 126,
-                        .y = 479
+                        .y = 478
                     },
                     // sign in the center of town
                     {
                         .text = "PALLET TOWN\\Shades of your\\journey await!",
                         .x = 118,
-                        .y = 487
+                        .y = 486
                     },
                     // sign outside Oak's Lab
                     {
                         .text = "Prof Oak's Pokemon\\Research Lab",
                         .x = 130,
-                        .y = 495
+                        .y = 494
                     }
                 }
             }
