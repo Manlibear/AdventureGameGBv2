@@ -18,6 +18,8 @@
 #include "../res/maps/rivals_house_map.h"
 #include "../res/maps/players_house_gf_map.h"
 
+#include "../res/pals/overworld_palette.h"
+
 
 const MapArea areas[map_area_count] = {
     // pallet_town
@@ -31,7 +33,8 @@ const MapArea areas[map_area_count] = {
         .bank = 7,
         .area_index = 0,
         .adjacents = {12},
-        .map_data = pallet_town_map
+        .map_data = pallet_town_map,
+        .get_tile_palette = &overworld_tile_pal
 },
 	// route_3
 {
@@ -176,7 +179,8 @@ const MapArea areas[map_area_count] = {
         .bank = 6,
         .area_index = 12,
         .adjacents = {0, 10},
-        .map_data = route_1_map
+        .map_data = route_1_map,
+        .get_tile_palette = &overworld_tile_pal
 },
 	// oaks_lab
 {
@@ -188,7 +192,8 @@ const MapArea areas[map_area_count] = {
         .row_length = 22,
         .bank = 10,
         .area_index = 0,
-        .map_data = oaks_lab_map
+        .map_data = oaks_lab_map,
+        .get_tile_palette = &overworld_tile_pal
 },
 	// players_house_1f
 {

@@ -14,7 +14,7 @@ const struct LayerData layers_data[3] = {
                         .sourceX = 114,
                         .sourceY =  478,
                         .targetLayer = indoors_idx,
-                        .targetX = 47,
+                        .targetX = 46,
                         .targetY = 464
                     },
                     // rival's house
@@ -90,10 +90,10 @@ const struct LayerData layers_data[3] = {
                     // door out
                     {
                         .sourceX = 47,
-                        .sourceY =  465,
+                        .sourceY =  466,
                         .targetLayer = overworld_idx,
                         .targetX = 114,
-                        .targetY = 479
+                        .targetY = 480
                     }
                 }
             },

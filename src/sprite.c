@@ -1,15 +1,19 @@
 #include "../include/sprite.h"
 
 #include <stdio.h>
+#include "../res/sprites/player.h"
 
 struct Sprite player;
-struct Sprite sprites[20];
+struct Sprite sprites[8];
 char flip_x;
 
 void set_sprite_frame(Sprite *spr, UINT8 tile)
 {
-    set_sprite_tile(spr->sprite_index, tile);
-    set_sprite_tile(spr->sprite_index + 1, tile + 2);
+    // set_sprite_tile(spr->sprite_index, tile);
+    // set_sprite_tile(spr->sprite_index + 1, tile + 2);
+    SWITCH_ROM_MBC1(1);
+    set_sprite_data(0, 4, &player_sprites[tile * 16]);
+    // set_sprite_data(2, 2, &player_sprites[(tile + 2) * 16]);
 }
 
 void handle_animation(Sprite *spr)

@@ -26,10 +26,24 @@
             "label": "Run",
             "type": "shell",
             "windows": {
-                "command": "echo Deploying...; taskkill /IM \"bgb.exe\" >$null 2>&1; & 'C:\\Program Files\\bgb\\bgb.exe' bin\\main.gb"
+                "command": "echo Deploying...; taskkill /IM \"bgb.exe\" >$null 2>&1; & 'C:\\Program Files\\bgb\\bgb.exe' bin\\main.gbc"
             },
             "linux": {},
             "group": "none",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "showReuseMessage": false,
+                "echo": false
+            }
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "windows": {
+                "command": "Remove-Item bin\\obj\\*.*"
+            },
+            "linux": {},
+            "group": "build",
             "problemMatcher": "$msCompile",
             "presentation": {
                 "showReuseMessage": false,

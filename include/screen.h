@@ -2,6 +2,7 @@
 #define _SCREEN_H
 
 #include <gb/gb.h>
+#include <gb/cgb.h>
 #include "../res/ui/ui_map.h"
 #include "../res/ui/ui_tiles.h"
 #include "../res/ui/font.h"
@@ -11,6 +12,8 @@ extern int text_window_offset;
 extern int text_window_length;
 extern unsigned char text_window_bank;
 extern unsigned char* text_window_text;
+extern UWORD spritePalette[];
+extern UWORD bkgPalette[];
 
 void fade_out_black();
 void fade_in();

@@ -3,6 +3,24 @@
 
 #define FADE_STEPS 4
 
+
+UWORD spritePalette[] = {
+	RGB_WHITE, RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK
+};
+
+UWORD bkgPalette[] = {
+    RGB_WHITE, RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK,
+    RGB(15, 31, 15), RGB(9, 31, 9), RGB_DARKGREEN, RGB_BLACK,
+    RGB(27, 27, 21), RGB(20, 20, 0), RGB_BROWN, RGB_BLACK
+};
+
+UWORD fade_palettes[] = {
+	RGB_WHITE, RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK,
+	RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK, RGB_BLACK,
+    RGB_DARKGRAY, RGB_BLACK, RGB_BLACK, RGB_BLACK,
+    RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK,
+};
+
 char fade_delay = 6;
 char window_showing = 0;
 int text_window_offset = 0;
@@ -14,15 +32,17 @@ void fade_out_black()
 {
     for (int i = 1; i != FADE_STEPS; ++i)
     {
-        // 0xFFE4 is 11'11 11'11 11'10 01'00
-        // (i << 1) is i*2
-        // each iteration the number gets shifted by 2 bits to the right
-        // each two bit pair represents a color on DMG
-        // BGP_REG is 8 bit and upper 8 bit will be discarded on cast
-        // i=0 would be 11'10 01'00
-        // i=1 is 11'11 10'01 etc.
-        BGP_REG = (0xFFE4 >> (i << 1));
-        OBP0_REG = (0xFFE4 >> (i << 1));
+        // BGP_REG = (0xFFE4 >> (i << 1));
+        // OBP0_REG = (0xFFE4 >> (i << 1));
+        
+        set_bkg_palette_entry(0, 1-i, RGB_LIGHTGRAY);
+        set_bkg_palette_entry(0, 2-i, RGB_DARKGRAY);
+        set_bkg_palette_entry(0, 3-i, RGB_BLACK);
+
+        set_sprite_palette_entry(0, 1-i, RGB_LIGHTGRAY);
+        set_sprite_palette_entry(0, 2-i, RGB_DARKGRAY);
+        set_sprite_palette_entry(0, 3-i, RGB_BLACK);
+
         for (int j = 0; j < fade_delay; j++)
             wait_vbl_done();
     }
@@ -32,16 +52,40 @@ void fade_in()
 {
     for (int i = FADE_STEPS; i >= 0; --i)
     {
-        // 0xFFE4 is 11'11 11'11 11'10 01'00
-        // 0xFFE0 is 11'11 11'11 11'11 00'00 as the sprites use a different palette
-        // (i << 1) is i*2
-        // each iteration the number gets shifted by 2 bits to the right
-        // each two bit pair represents a color on DMG
-        // BGP_REG is 8 bit and upper 8 bit will be discarded on cast
-        // i=0 would be 11'10 01'00
-        // i=1 is 11'11 10'01 etc.
-        BGP_REG = (0xFFE4 >> (i << 1));
-        OBP0_REG = (0xFFE0 >> (i << 1));
+        // BGP_REG = (0xFFE4 >> (i << 1));
+        // OBP0_REG = (0xFFE0 >> (i << 1));
+        // set_sprite_palette(i - 1, 4, fade_palettes);
+        // set_bkg_palette(i - 1, 4, fade_palettes);
+        
+        switch (i)
+        {
+            case 4:
+                set_bkg_palette_entry(0, 0, spritePalette[2]);
+                set_sprite_palette_entry(0, 0, spritePalette[2]);        
+                break;
+                
+            case 3:
+                set_bkg_palette_entry(0, 0, spritePalette[1]);
+                set_bkg_palette_entry(0, 1, spritePalette[2]);
+                
+                set_sprite_palette_entry(0, 0, spritePalette[1]);
+                set_sprite_palette_entry(0, 1, spritePalette[2]);
+                break;
+                
+            case 2:
+                set_bkg_palette_entry(0, 0, spritePalette[0]);
+                set_bkg_palette_entry(0, 1, spritePalette[1]);
+                set_bkg_palette_entry(0, 2, spritePalette[2]);
+                
+                set_sprite_palette_entry(0, 0, spritePalette[0]);
+                set_sprite_palette_entry(0, 1, spritePalette[1]);
+                set_sprite_palette_entry(0, 2, spritePalette[2]);
+                break;
+            
+            default:
+                break;
+        }
+
         for (int j = 0; j < fade_delay; j++)
             wait_vbl_done();
     }

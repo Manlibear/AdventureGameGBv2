@@ -10,6 +10,8 @@ char allow_interact = 1;
 
 UINT16 target_x = 0;
 UINT16 target_y = 0;
+UINT16 draw_target_x = 0;
+UINT16 draw_target_y = 0;
 
 void handle_player_input()
 {

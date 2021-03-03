@@ -80,11 +80,11 @@ foreach ($c_file in Get-ChildItem "*.c" -Recurse  | Select-Object BaseName, Last
             $bank_number_string = " (Bank#$bank_no)"
             #... and compile the .o using this bank
             #  -Wf-bo# -Wf-ba# 
-            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -Wf-bo$bank_no -Wf-ba$bank_no -debug  -DUSE_SFR_FOR_REG -c -o $o_file_path $c_file_path"
+            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -Wf-bo$bank_no -Wf-ba$bank_no -c -o $o_file_path $c_file_path"
         }
         else {
             # no bank or bank0, just compile as normal
-            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o $o_file_path $c_file_path"
+            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -c -o $o_file_path $c_file_path"
         }
 
         if ($null -ne $output) {
@@ -126,7 +126,7 @@ if ($true -eq $success) {
 
     #compile the .gb file using our earlier generated .o files
     #-Wl-ya$bank_power
-    Invoke-Expression "$gdk_base\bin\lcc -Wl-yt3 -Wl-yo$bank_power -DUSE_SFR_FOR_REG -o $bin_folder\main.gb $all_o_files"
+    Invoke-Expression "$gdk_base\bin\lcc -Wl-yt3 -Wl-yo$bank_power -Wa-l -Wm-yC -o $bin_folder\main.gbc $all_o_files"
     exit 0
 }
 else {

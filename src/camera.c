@@ -15,7 +15,7 @@ char move_time = 0;
 char frames_since_update = 0;
 char move_amount = 0;
 char needs_redraw = 0;
-char move_per_step= 8;
+char move_per_step= 16;
 
 void update_camera()
 {
@@ -23,33 +23,37 @@ void update_camera()
     player.was_moving = player.is_moving;
     if (!player.is_moving && player.facing != FACE_NONE)
     {
-        target_x = position_x;
-        target_y = position_y;
+        draw_target_x = target_x = position_x;
+        draw_target_y = target_y = position_y;
 
         switch (player.facing)
         {
         case FACE_N:
-            target_y--;
+            target_y -= 2;
+            draw_target_y -= 1;
             player.is_moving = 1;
             break;
         case FACE_S:
-            target_y++;
+            target_y += 2;
+            draw_target_y += 1;
             player.is_moving = 1;
             break;
         case FACE_E:
-            target_x++;
+            target_x += 2;
+            draw_target_x += 1;
             player.is_moving = 1;
             break;
         case FACE_W:
-            target_x--;
+            target_x -= 2;
+            draw_target_x -= 1;
             player.is_moving = 1;
             break;
         }
 
-        if (!is_tile_walkable(target_x, target_y + 1, position_layer) || !is_tile_walkable(target_x + 1, target_y + 1, position_layer))
+        if (!is_tile_walkable(target_x, target_y, position_layer))
         {
-            target_x = position_x;
-            target_y = position_y;
+            draw_target_x = target_x = position_x;
+            draw_target_y = target_y = position_y;
             player.is_moving = 0;
             player.was_moving = 0;
             return;
@@ -78,6 +82,13 @@ void update_camera()
 
     if (player.is_moving && move_amount > 0)
     {
+        if(move_amount == 8)
+        {
+            needs_redraw = 1;
+            draw_target_x = target_x;
+            draw_target_y = target_y;
+        }
+
         if (frames_since_update >= move_time)
         {
             frames_since_update = 0;

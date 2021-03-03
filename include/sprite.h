@@ -26,7 +26,7 @@ typedef struct Sprite
 } Sprite;
 
 extern struct Sprite player;
-extern struct Sprite sprites[20];
+extern struct Sprite sprites[8];
 
 void handle_animation(Sprite *spr);
 

@@ -2,6 +2,7 @@
 
 unsigned char btn;
 
+
 void main()
 {
     init();
@@ -52,10 +53,17 @@ void main()
 
 void init()
 {
+    cpu_fast();
+
     SPRITES_8x16;
 
     SWITCH_RAM_MBC1(1);
-    set_sprite_data(0, 24, player_sprites);
+    set_sprite_data(0, 4, player_sprites);
+    set_sprite_tile(1, 3);
+    set_sprite_palette(0, 1, spritePalette);
+    set_bkg_palette(0, 3, bkgPalette);
+    // set_sprite_prop(0, 0);
+
     player.sprite_index = 0;
     player.tile_index = 0;
     player.anim_state = 0;
@@ -63,12 +71,10 @@ void init()
     player.last_facing = FACE_S;
     player.x = (9 * 8) + 8;
     player.y = (7 * 8) + 16;
-    player.frame_length = player.frames_since_update = 3;
+    player.frame_length = player.frames_since_update = 8;
 
-    position_x = 114;
-    target_x = 114;
-    position_y = 479;
-    target_y = 479;
+    position_x = target_x = draw_target_x = 118;
+    target_y = draw_target_y = position_y = 480;
     position_layer = 0;
 
     determine_area(position_x, position_y);

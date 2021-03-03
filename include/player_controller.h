@@ -16,6 +16,8 @@ extern char is_interacting;
 
 extern UINT16 target_x;
 extern UINT16 target_y;
+extern UINT16 draw_target_x;
+extern UINT16 draw_target_y;
 
 
 #endif
