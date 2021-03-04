@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "debug.h": "c",
-        "pallet_town_map.h": "c"
+        "pallet_town_map.h": "c",
+        "pallet_town_data.h": "c",
+        "player.h": "c"
     }
 }

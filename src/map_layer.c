@@ -8,24 +8,22 @@ const struct MapLayer map_layers[MAP_LAYERS_COUNT] = {
         .tile_map_length = overworld_length,
         .tile_map_bank = overworldBank,
         .walkable_tiles = {
-            17,
+            15,
             0x00,
-            0x68,
-            0x6B,
-            0x6E,
-            0x6F,
-            0x6B,
-            0xC0,
-            0xC1,
-            0xC6,
-            0x85,
-            0x86,
-            0x8C,
-            0x8D,
-            0x8F,
-            0x95,
-            0xA1,
-            0xBB,
+            0x01,
+            0x04,
+            0x07,
+            0x08,
+            0x1E,
+            0x1D,
+            0x25,
+            0x26,
+            0x2E,
+            0x3A,
+            0x53,
+            0x54,
+            0x5B,
+            0x5C,
         }},
     [indoors_idx] = {.tile_map = indoors, .tile_map_length = indoors_length, .tile_map_bank = indoorsBank, .walkable_tiles = {
                                                                                                                24,
@@ -71,17 +69,17 @@ char is_tile_walkable(UINT16 x, UINT16 y, unsigned char layer)
 
 char is_on_travel_tile()
 {
-    SWITCH_ROM_MBC1(map_dataBank);
     MapArea *ma = get_adjacent_area(position_x, position_y);
-    TravelTile *tts = layers_data[position_layer].maps[ma->area_index].travel_tiles;
+    SWITCH_ROM_MBC1(ma->bank);
+    TravelTile (*tts)[TRAVEL_TILES_COUNT] = layers_data[position_layer].maps[ma->area_index].travel_tiles;
 
     for (int i = 0; i < TRAVEL_TILES_COUNT; i++)
     {
-        if (position_x == tts[i].sourceX && position_y == tts[i].sourceY)
+        if (position_x == (*tts)[i].sourceX && position_y == (*tts)[i].sourceY)
         {
-            position_x = target_x = draw_target_x = tts[i].targetX;
-            position_y = target_y = draw_target_y = tts[i].targetY;
-            position_layer = tts[i].targetLayer;
+            position_x = target_x = draw_target_x = (*tts)[i].targetX;
+            position_y = target_y = draw_target_y = (*tts)[i].targetY;
+            position_layer = (*tts)[i].targetLayer;
             return 1;
         }
     }
@@ -91,40 +89,41 @@ char is_on_travel_tile()
 
 char is_tile_interactable()
 {
-
     MapArea *ma = get_area(position_x, position_y);
-
-    SWITCH_RAM_MBC1(map_dataBank);
-    Interactable *ints = layers_data[position_layer].maps[ma->area_index].interactables;
+    SWITCH_ROM_MBC1(ma->bank);
+    Interactable (*ints)[INTERACTABLE_COUNT] = layers_data[position_layer].maps[ma->area_index].interactables;
 
     UINT16 int_target_x = position_x;
     UINT16 int_target_y = position_y;
 
     switch (player.last_facing)
     {
-        case FACE_E:
-            int_target_x += 2;
-            break;
-            
-        case FACE_W:
-            int_target_x -= 2;
-            break;
-            
-        case FACE_N:
-            int_target_y -= 2;
-            break;
-            
-        case FACE_S:
-            int_target_y += 2;
-            break;
+    case FACE_E:
+        int_target_x += 2;
+        break;
+
+    case FACE_W:
+        int_target_x -= 2;
+        break;
+
+    case FACE_N:
+        int_target_y -= 2;
+        break;
+
+    case FACE_S:
+        int_target_y += 2;
+        break;
     }
 
     for (int i = 0; i < INTERACTABLE_COUNT; i++)
     {
-        if (int_target_x == ints[i].x && int_target_y == ints[i].y)
+        if (int_target_x == (*ints)[i].x && int_target_y == (*ints)[i].y)
         {
             // display message on screen
-            text_window_offset = show_text_window(ints[i].text, strlen(ints[i].text), map_dataBank, 0);
+            text_window_offset = show_text_window((*ints)[i].text, strlen((*ints)[i].text), ma->bank, 0);
+            return 1;
         }
     }
+
+    return 0;
 }

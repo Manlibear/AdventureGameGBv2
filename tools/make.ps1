@@ -3,6 +3,7 @@ $src_folder = "$(get-location)\src"
 $bin_folder = "$(get-location)\bin"
 $inc_folder = "$(get-location)\include"
 $res_folder = "$(get-location)\res"
+$data_folder = "$(get-location)\data"
 $obj_folder = "$bin_folder\obj"
 $all_o_files = ""
 $highest_bank = 0
@@ -30,8 +31,14 @@ foreach ($c_file in Get-ChildItem "*.c" -Recurse  | Select-Object BaseName, Last
         $c_file_path = "$src_folder\$($c_file.BaseName).c"
         $c_file_path_short = "src\$($c_file.BaseName).c"
     }
+    elseif ($c_file.Parent -eq "data"){
+        $h_file_path = "$data_folder\$($c_file.BaseName).h"
+        $c_file_path = "$data_folder\$($c_file.BaseName).c"
+        $c_file_path_short = "data\$($c_file.BaseName).c"
+        $o_prefix = "data_"
+    }
     else {
-        # $h_file = Get-ChildItem "$res_folder\$($c_file.Parent)\$($c_file.BaseName).h" | Select-Object BaseName, LastWriteTime
+        
         $h_file_path = "$res_folder\$($c_file.Parent)\$($c_file.BaseName).h"
         $c_file_path = "$res_folder\$($c_file.Parent)\$($c_file.BaseName).c"
         $c_file_path_short = "res\$($c_file.Parent)\$($c_file.BaseName).c"
@@ -80,11 +87,11 @@ foreach ($c_file in Get-ChildItem "*.c" -Recurse  | Select-Object BaseName, Last
             $bank_number_string = " (Bank#$bank_no)"
             #... and compile the .o using this bank
             #  -Wf-bo# -Wf-ba# 
-            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -Wf-bo$bank_no -Wf-ba$bank_no -c -o $o_file_path $c_file_path"
+            $output = Invoke-Expression "$gdk_base\bin\lcc --debug -Wa-l -Wl-m -Wl-j -Wf-bo$bank_no -Wf-ba$bank_no -c -o $o_file_path $c_file_path"
         }
         else {
             # no bank or bank0, just compile as normal
-            $output = Invoke-Expression "$gdk_base\bin\lcc -Wa-l -Wl-m -Wl-j -c -o $o_file_path $c_file_path"
+            $output = Invoke-Expression "$gdk_base\bin\lcc --debug -Wa-l -Wl-m -Wl-j -c -o $o_file_path $c_file_path"
         }
 
         if ($null -ne $output) {
@@ -93,16 +100,16 @@ foreach ($c_file in Get-ChildItem "*.c" -Recurse  | Select-Object BaseName, Last
                 
                 if ($_ -like '*error*') {
                     $success = $false # don't bother compiling the .gb file later on, also halts the BGB deploment in tasks.json
-                    Write-Host "[ERROR] " -Foreground Red -NoNewLine; Write-Host "$c_file_path_short $_"
+                    Write-Host "[ERROR] " -Foreground Red -NoNewLine; Write-Host "src$_"
                 }
                 elseif ($_ -like "*warning*") {
-                    Write-Host "[WARNING] " -Foreground Yellow -NoNewLine; Write-Host "$c_file_path_short $_"
+                    Write-Host "[WARNING] " -Foreground Yellow -NoNewLine; Write-Host "src$_"
                     Write-Output "$c_file_path_short -> $o_file_path_short$bank_number_string"
                 }
-                elseif ($_ -ne "" -and $null -ne $_) {
-                    Write-Host "[UNKNOWN] " -Foreground Magenta -NoNewLine; Write-Host "$c_file_path_short $_"
-                    Write-Output "$c_file_path_short -> $o_file_path_short$bank_number_string"
-                }
+                # elseif ($_ -ne "" -and $null -ne $_) {
+                #     Write-Host "[UNKNOWN] " -Foreground Magenta -NoNewLine; Write-Host "$c_file_path_short $_"
+                #     Write-Output "$c_file_path_short -> $o_file_path_short$bank_number_string"
+                # }
             }
         }
         else {
@@ -126,7 +133,7 @@ if ($true -eq $success) {
 
     #compile the .gb file using our earlier generated .o files
     #-Wl-ya$bank_power
-    Invoke-Expression "$gdk_base\bin\lcc -Wl-yt3 -Wl-yo$bank_power -Wa-l -Wm-yC -o $bin_folder\main.gbc $all_o_files"
+    Invoke-Expression "$gdk_base\bin\lcc -y -Wl-yt3 -Wl-yo$bank_power -Wa-l -Wm-yC -o $bin_folder\main.gbc $all_o_files"
     exit 0
 }
 else {

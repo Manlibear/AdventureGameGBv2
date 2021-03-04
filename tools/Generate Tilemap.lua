@@ -13,13 +13,31 @@ function deepcopy(orig)
     return copy
 end
 
+function split(str, pat)
+    local t = {}  -- NOTE: use {n = 0} in Lua-5.0
+    local fpat = "(.-)" .. pat
+    local last_end = 1
+    local s, e, cap = str:find(fpat, 1)
+    while s do
+       if s ~= 1 or cap ~= "" then
+          table.insert(t, cap)
+       end
+       last_end = e+1
+       s, e, cap = str:find(fpat, last_end)
+    end
+    if last_end <= #str then
+       cap = str:sub(last_end)
+       table.insert(t, cap)
+    end
+    return t
+ end
 
 local is_test = false
 local offset = 0
 local data = Dialog():entry{
     id = "offset_value",
     label = "Offset:",
-    text = "104"
+    text = "1"
 }:check{
     id = "is_test_value",
     label = "Output to test folder?",
@@ -64,6 +82,7 @@ if not spr then
 end
 
 layer_map = {}
+layer_area_lookup = {}
 
 for group_index, layer_group in ipairs(spr.layers) do
 
@@ -72,6 +91,8 @@ for group_index, layer_group in ipairs(spr.layers) do
         sprites = {}
         -- sprites[1] = "0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\n\t0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,"
         sprite_lookup = {}
+        area_lookup_index = 1;
+        area_lookup = {}
         -- sprite_lookup[sprites[1]] = "1"
 
         local layer_name, layer_bank = layer_group.name:match("([%w_]*).bank(%d*)")
@@ -90,6 +111,14 @@ for group_index, layer_group in ipairs(spr.layers) do
                         layer_map[layer_name][area_name]["y"] = area:cel(1).bounds.y // 8
                         layer_map[layer_name][area_name]["w"] = area:cel(1).bounds.width // 8
                         layer_map[layer_name][area_name]["h"] = area:cel(1).bounds.height // 8
+
+                        layer_map[layer_name][area_name]["adjacents"] = {}
+                        for _, adj in ipairs(split(area.data, "/")) do
+                            table.insert(layer_map[layer_name][area_name]["adjacents"], adj)
+                        end
+
+                        area_lookup[area_name] = area_lookup_index
+                        area_lookup_index = area_lookup_index + 1
 
                         tile_map = {}
                         -- loop all cells in this area
@@ -148,12 +177,16 @@ for group_index, layer_group in ipairs(spr.layers) do
             end
         end
 
+        -- layer_area_lookup[layer_name] = area_lookup
         layer_map[layer_name]["sprites"] = deepcopy(sprites)
         layer_map[layer_name]["tile_count"] = sprite_index - 1
     end
 end
 
 layer_index = 0
+
+local area_index = 0
+local area_lookup_index = 1
 
 map_area_items = ""
 map_area_includes = ""
@@ -186,10 +219,19 @@ for layer_name, areas in pairs(layer_map) do
     tiles_h_file = io.open(folder_root .. "res\\tiles\\" .. layer_name .. ".h", "w")
     tiles_c_file = io.open(folder_root .. "res\\tiles\\" .. layer_name .. ".c", "w")
 
-    local area_index = 0
-    for i, v in pairs(areas) do
-        if i ~= "bank" and i ~= "sprites" and i ~= "tile_count" then
 
+    area_lookup = {}
+    for i, v in pairs(areas) do
+        if i ~= "bank" and i ~= "sprites" and i ~= "tile_count" and i ~= "adjacents" then
+            area_lookup[i] = area_lookup_index
+            area_lookup_index = area_lookup_index + 1
+        end
+    end
+
+
+    for i, v in pairs(areas) do
+        if i ~= "bank" and i ~= "sprites" and i ~= "tile_count" and i ~= "adjacents" then
+            
             local name_length = string.len(i)
             local padding = 40 - name_length
             print("     - "..i .. string.format("%" .. padding .. "s", " ") .. "x:" .. v["x"] .. "   y:" .. v["y"] .. "   w:" ..
@@ -206,6 +248,23 @@ for layer_name, areas in pairs(layer_map) do
             map_area_item_template = map_area_item_template:gsub("#ROW_LENGTH#", v["w"])
             map_area_item_template = map_area_item_template:gsub("#LAYER#", layer_index)
             map_area_item_template = map_area_item_template:gsub("#AREA_INDEX#", area_index)
+
+            
+            adjacent_string = ".adjacents = {"
+            has_adj = false
+            
+            for _,adj in ipairs(layer_map[layer_name][i]["adjacents"]) do
+                has_adj = true
+                adjacent_string = adjacent_string .. (area_lookup[adj] - 1) .. ","
+            end
+
+            if has_adj then
+                adjacent_string = adjacent_string .. "}"
+                map_area_item_template = map_area_item_template:gsub("#ADJACENTS#", adjacent_string)
+            else
+                map_area_item_template = map_area_item_template:gsub("#ADJACENTS#", "")
+            end
+
 
             map_area_items = map_area_items .. map_area_item_template .. "\n\t"
             map_area_includes = map_area_includes .. "\n" .. "#include \"../res/maps/" .. i .. "_map.h\""

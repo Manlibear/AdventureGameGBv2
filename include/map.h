@@ -19,7 +19,7 @@ extern const MapArea oob;
 void redraw_map();
 void draw_map_slice();
 MapArea *get_area(UINT16 x, UINT16 y);
-MapArea *determine_area(UINT16 x, UINT16 y);
+void determine_area(UINT16 x, UINT16 y);
 MapArea *get_adjacent_area(UINT16 x, UINT16 y);
 
 #endif

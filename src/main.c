@@ -1,8 +1,5 @@
 #include "..\include\main.h"
 
-unsigned char btn;
-
-
 void main()
 {
     init();
@@ -75,7 +72,7 @@ void init()
 
     position_x = target_x = draw_target_x = 118;
     target_y = draw_target_y = position_y = 480;
-    position_layer = 0;
+    position_layer = 1;
 
     determine_area(position_x, position_y);
 
@@ -88,7 +85,7 @@ void init()
     move_sprite(1, player.x + 8, player.y);
 
     SWITCH_ROM_MBC1(overworldBank);
-    set_bkg_data(104, overworld_length, overworld);
+    set_bkg_data(1, overworld_length, overworld);
 
     redraw_map();
 

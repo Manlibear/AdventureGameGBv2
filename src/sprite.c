@@ -1,6 +1,5 @@
 #include "../include/sprite.h"
 
-#include <stdio.h>
 #include "../res/sprites/player.h"
 
 struct Sprite player;

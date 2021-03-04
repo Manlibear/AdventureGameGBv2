@@ -19,11 +19,11 @@
 */
 
 /* Bank of tiles. */
-#define indoorsBank 9
+#define indoorsBank 8
 /* Start of tile array. */
 
 #define indoors_length 109
-#define indoors_idx 1
+#define indoors_idx 0
 extern const void __bank_indoors;
 extern const unsigned char indoors[];
 

@@ -10,7 +10,7 @@ const MapArea oob = {0};
 
 unsigned char loaded_layer = 0;
 unsigned char tile_load_buffer[22 * 20];
-unsigned char oob_fill = 0x68;
+unsigned char oob_fill = 0x04;
 
 void redraw_map()
 {
@@ -22,7 +22,7 @@ void redraw_map()
         loaded_layer = tile_area->layer;
 
         SWITCH_ROM_MBC1(map_layers[tile_area->layer].tile_map_bank);
-        set_bkg_data(104, map_layers[tile_area->layer].tile_map_length, map_layers[tile_area->layer].tile_map);
+        set_bkg_data(1, map_layers[tile_area->layer].tile_map_length, map_layers[tile_area->layer].tile_map);
     }
 
     if (tile_area->bank != _current_bank)
@@ -61,9 +61,6 @@ void draw_map_slice()
     if (player.last_facing == FACE_NONE)
         return;
 
-    UINT16 tile_index;
-    UINT16 target_tile;
-    char i;
     UINT16 draw_edge;
     INT16 count = 0;
 
@@ -86,10 +83,7 @@ void draw_map_slice()
                     SWITCH_ROM_MBC1(tile_area->bank);
                 }
 
-                target_tile = draw_edge + (tile_area->row_length * i);
-
-                tile_index = target_tile - tile_area->xs + ((SCR_TOP - tile_area->ys) * tile_area->row_length);
-                tile_load_buffer[i + 1] = tile_area->map_data[tile_index];
+                tile_load_buffer[i + 1] = tile_area->map_data[(draw_edge + (tile_area->row_length * i)) - tile_area->xs + ((SCR_TOP - tile_area->ys) * tile_area->row_length)];
             }
         }
 
@@ -114,9 +108,7 @@ void draw_map_slice()
                     SWITCH_ROM_MBC1(tile_area->bank);
                 }
 
-                target_tile = (draw_edge - tile_area->ys) * tile_area->row_length;
-                tile_index = target_tile + (i + SCR_LEFT - tile_area->xs);
-                tile_load_buffer[i + 1] = tile_area->map_data[tile_index];
+                tile_load_buffer[i + 1] = tile_area->map_data[((draw_edge - tile_area->ys) * tile_area->row_length) + (i + SCR_LEFT - tile_area->xs)];
             }
         }
 
@@ -124,7 +116,7 @@ void draw_map_slice()
     }
 }
 
-MapArea *determine_area(UINT16 x, UINT16 y)
+void determine_area(UINT16 x, UINT16 y)
 {
     tile_area = current_area = get_area(x, y);
 }

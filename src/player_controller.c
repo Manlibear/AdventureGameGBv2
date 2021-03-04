@@ -1,13 +1,12 @@
 #include "../include/player_controller.h"
 
-UINT16 position_x = 0;
-UINT16 position_y = 0;
-unsigned char position_layer = 0;
-
 unsigned char has_travelled = 0;
 char is_interacting;
 char allow_interact = 1;
 
+unsigned char position_layer = 0;
+UINT16 position_x = 0;
+UINT16 position_y = 0;
 UINT16 target_x = 0;
 UINT16 target_y = 0;
 UINT16 draw_target_x = 0;
@@ -37,11 +36,7 @@ void handle_player_input()
             is_interacting = 1;
         }
         break;
-
-    case J_SELECT:
-        BGB_print_xy();
-        break;
-
+        
     default:
         player.facing = FACE_NONE;
         allow_interact = 1;

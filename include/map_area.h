@@ -4,8 +4,6 @@
 
 #include <gb/gb.h>
 
-typedef UINT8 (*palletFuncPtr)(UINT8);
-
 typedef struct MapArea
 {
     UINT16 xs;
@@ -17,7 +15,6 @@ typedef struct MapArea
     unsigned char layer;
     unsigned char bank;
     unsigned char* map_data;
-    palletFuncPtr get_tile_palette;
     unsigned char adjacents[4];
 } MapArea;
 

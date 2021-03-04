@@ -14,13 +14,6 @@ UWORD bkgPalette[] = {
     RGB(27, 27, 21), RGB(20, 20, 0), RGB_BROWN, RGB_BLACK
 };
 
-UWORD fade_palettes[] = {
-	RGB_WHITE, RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK,
-	RGB_LIGHTGRAY, RGB_DARKGRAY, RGB_BLACK, RGB_BLACK,
-    RGB_DARKGRAY, RGB_BLACK, RGB_BLACK, RGB_BLACK,
-    RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK,
-};
-
 char fade_delay = 6;
 char window_showing = 0;
 int text_window_offset = 0;
@@ -101,14 +94,19 @@ int show_text_window(unsigned char *text, int length, unsigned char text_bank, i
 {
     move_win(7, 112); // 7 because default pos is actually -7,0
 
+    VBK_REG = 1;
     SWITCH_ROM_MBC1(ui_tilesBank);
     set_win_data(0x5F, ui_tiles_count, ui_tiles);
 
-    SWITCH_ROM_MBC1(ui_mapBank);
-    set_win_tiles(0, 0, 20, 4, ui_map);
-
     SWITCH_ROM_MBC1(fontBank);
     set_win_data(0, font_length, font);
+    fill_win_rect(0, 0, 20, 4, 0x08);
+    
+    VBK_REG = 0;
+
+    
+    SWITCH_ROM_MBC1(ui_mapBank);
+    set_win_tiles(0, 0, 20, 4, ui_map);
 
     SWITCH_ROM_MBC1(text_bank);
 
@@ -125,10 +123,8 @@ int show_text_window(unsigned char *text, int length, unsigned char text_bank, i
     SHOW_WIN;
     window_showing = 1;
 
-    BGB_MESSAGE_FMT(dmb, "len: %d", length);
     for (int i = offset; i < length; i++)
     {
-        BGB_MESSAGE_FMT(dmb, "%d", text[i]);
         if (text[i] == 0x5C) // backslash is used start a new line
         {
             if (cur_y == 1)

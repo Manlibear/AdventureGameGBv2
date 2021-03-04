@@ -12,11 +12,11 @@
 
  Info:
 
-   Bank          : 7
+   Bank          : 22
 
    Map size      : 40 x 36
 
-   Tile offset   : 103
+   Tile offset   : 0
 
 
 
@@ -38,11 +38,11 @@
 
 #define pallet_town_map_height 36
 
-#define pallet_town_map_bank 7
+#define pallet_town_map_bank 22
 
-#define pallet_town_map_offset 103
+#define pallet_town_map_offset 0
 
-#define pallet_town_idx 0
+#define pallet_town_idx 5
 
 
 

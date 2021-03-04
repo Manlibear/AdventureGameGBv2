@@ -22,10 +22,9 @@
 #include "../res/tiles/indoors.h"
 #include "../res/tiles/overworld.h"
 
-#define TRAVEL_TILES_COUNT 8
-#define INTERACTABLE_COUNT 8
-#define MAPS_COUNT 16
-#define map_dataBank 2
+#define TRAVEL_TILES_COUNT 4
+#define INTERACTABLE_COUNT 4
+#define MAPS_COUNT 15
 
 typedef struct TravelTile
 {
@@ -44,8 +43,8 @@ typedef struct Interactable{
 
 typedef struct MapData
 {
-    const struct TravelTile travel_tiles[TRAVEL_TILES_COUNT];
-    const struct Interactable interactables[INTERACTABLE_COUNT];
+    const struct TravelTile (*travel_tiles)[TRAVEL_TILES_COUNT];
+    const struct Interactable  (*interactables)[INTERACTABLE_COUNT];
 } MapData;
 
 typedef struct LayerData

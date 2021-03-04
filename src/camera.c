@@ -1,3 +1,4 @@
+
 #include "../include/camera.h"
 
 #define SCREEN_MID_X (SCX_REG + 9 * 8)
@@ -50,7 +51,7 @@ void update_camera()
             break;
         }
 
-        if (!is_tile_walkable(target_x, target_y, position_layer))
+        if (!is_tile_walkable(target_x, target_y, position_layer) || !is_tile_walkable(target_x, target_y + 1, position_layer))
         {
             draw_target_x = target_x = position_x;
             draw_target_y = target_y = position_y;

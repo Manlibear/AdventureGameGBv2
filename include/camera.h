@@ -6,6 +6,7 @@
 #include "map_layer.h"
 #include "map.h"
 
+
 void update_camera();
 
 extern char needs_redraw;

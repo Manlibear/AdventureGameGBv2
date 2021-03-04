@@ -1,9 +1,7 @@
 #include <gb/gb.h>
 #include <gb/cgb.h>
-#include <stdio.h>
 
 // sprites
-#include "../res/maps/pallet_town_map.h"
 #include "../res/tiles/overworld.h"
 #include "../res/sprites/player.h"
 

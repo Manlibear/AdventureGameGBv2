@@ -19,11 +19,11 @@
 */
 
 /* Bank of tiles. */
-#define overworldBank 2
+#define overworldBank 7
 /* Start of tile array. */
 
 #define overworld_length 95
-#define overworld_idx 0
+#define overworld_idx 1
 extern const void __bank_overworld;
 extern const unsigned char overworld[];
 
